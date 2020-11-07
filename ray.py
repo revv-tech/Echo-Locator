@@ -5,11 +5,14 @@ drawline = pg.draw.line
 
 
 class Ray:
-    def __init__(self, p: Particle, heading: float = 0):
+    #E: SONAR, ANGULO(Heading), FLAG VERIFICADOR DE PRIMARIO
+    def __init__(self, p: Particle, heading: float = 0, flagPrimary: bool = False):
         self.start = p.pos
         self.heading = heading
         self.end: pg.math.Vector2 = pg.math.Vector2()
         self.image = None
+        self.flagPrimary = flagPrimary
+    
 
     def update(self, screen: pg.display, p: Particle, boundaries: list):
         self.start = p.pos
@@ -54,6 +57,6 @@ class Ray:
             self.end = new_end
             self.image = drawline(screen, (100, 100, 100), self.start, self.end, 1)
 
+    
 
-
-
+    

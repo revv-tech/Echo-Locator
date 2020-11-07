@@ -19,9 +19,11 @@ class Particle:
         info = pg.display.Info()
 
         self.pos += self.vel
+        
         if self.pos.x < 0:
             self.pos.x = 0
             self.vel.x += 5
+            
         elif self.pos.x > info.current_w:
             self.pos.x = info.current_w - 1
             self.vel.x -= 5
@@ -29,6 +31,7 @@ class Particle:
         if self.pos.y < 0:
             self.pos.y = 0
             self.vel.y += 5
+            
         elif self.pos.y > info.current_h:
             self.pos.y = info.current_h - 1
             self.vel.y -= 5
