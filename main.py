@@ -45,7 +45,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 2
+    num_rays = 10
     ### END CONFIG
 
     pg.init()
@@ -64,34 +64,9 @@ def main():
         boundaries.append(Boundary(screen, (screen_w, screen_h), (0, screen_h)))
         boundaries.append(Boundary(screen, (0, screen_h), (0, 0)))
 
-    #BOUNDERIES
-    boundaries.append(Boundary(screen, (20, 85), (50, 30)))
-    boundaries.append(Boundary(screen, (50, 30), (100, 30)))
-    boundaries.append(Boundary(screen, (250, 30), (200, 30)))
-    boundaries.append(Boundary(screen, (250, 30), (300, 10)))
-    boundaries.append(Boundary(screen, (10, 200), (50, 230)))    
-    boundaries.append(Boundary(screen, (450, 30), (495, 70)))
-    boundaries.append(Boundary(screen, (350, 30), (400, 20)))
-    boundaries.append(Boundary(screen, (495, 70), (495, 200)))
-    boundaries.append(Boundary(screen, (495, 70), (495, 200)))
-    boundaries.append(Boundary(screen, (495, 200), (400, 250)))
-    boundaries.append(Boundary(screen, (495, 70), (495, 200)))
-    boundaries.append(Boundary(screen, (320, 70), (270, 100)))
-    
-    boundaries.append(Boundary(screen, (495, 495), (400,495)))
-    boundaries.append(Boundary(screen, (300, 400), (400,495)))
-    boundaries.append(Boundary(screen, (495, 350), (400,320)))
-    boundaries.append(Boundary(screen, (495, 350), (450,400)))
-    boundaries.append(Boundary(screen, (240, 320), (300,300)))
-    boundaries.append(Boundary(screen, (190, 200), (150,200)))
-    boundaries.append(Boundary(screen, (20, 400), (50,350)))
-    boundaries.append(Boundary(screen, (20, 400), (60,370)))
-    boundaries.append(Boundary(screen, (60, 370), (60,476)))
-    boundaries.append(Boundary(screen, (80, 400), (60,476)))
-    boundaries.append(Boundary(screen, (150, 390), (150,450)))
-    boundaries.append(Boundary(screen, (300, 485), (150,450)))
-    boundaries.append(Boundary(screen, (90, 300), (50,250)))
-                      
+    for i in range(num_walls):
+        boundaries.append(Boundary(screen, (300, 300), (400, 300)))
+ 
     while running:
      
         for event in pg.event.get():
@@ -102,7 +77,7 @@ def main():
                 if event.key == pygame.K_BACKSPACE:
                     rays = rayEditor(segment,num_rays,p)
                 #CAMBIAN LOS SECTORES
-                if event.key == pygame.K_4:
+                if event.key == pygame.K_0:
                     segment = 0
                     rays = rayEditor(segment,num_rays,p)
                 if event.key == pygame.K_1:
