@@ -13,7 +13,7 @@ class Particle:
 
     def update(self, screen: pg.display):
         #self.move_random()
-        self.image = pg.draw.circle(screen, pg.Color('white'), (250, 250), 4, 2)
+        self.image = pg.draw.circle(screen, pg.Color('blue'), (250, 250), 4, 2)
 
     def move_random(self):
         info = pg.display.Info()

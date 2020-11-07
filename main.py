@@ -13,7 +13,12 @@ from PIL import Image
 def rayEditor(segment,num_rays,p):
     rays = []
     for i in range(num_rays):
-        rays.append(Ray(p, (i * 90 / num_rays + segment)))
+        
+        x = randint(0, 90)
+        rays.append(Ray(p, (x + segment) + 1, False))
+        rays.append(Ray(p, (x + segment)))
+        rays.append(Ray(p, (x + segment) - 1, False))
+        
     return rays
 
 #AUXILIAR
@@ -40,7 +45,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 90
+    num_rays = 2
     ### END CONFIG
 
     pg.init()
