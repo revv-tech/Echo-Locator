@@ -54,7 +54,8 @@ class Ray:
                 dist = self.start.distance_to((x, y))
                 #Intensidad del rayo
                 intensidad = (1-(dist/500))**2
-                
+                intensidad = max(0, min(intensidad, 255))
+                #print(intensidad)
                 if dist < closest:
                     closest = dist
                     new_end.xy = x, y
@@ -69,8 +70,9 @@ class Ray:
             self.end = new_end
             
             if self.flagPrimary:
-                #print(intensidad)
-                #white =  intensidad * white
+                
+                color =  (((x+y)/2) * intensidad)
+                white = (color,color,color)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
                 drawline(screen, white, self.end, self.end, 1) # COLOR
                 

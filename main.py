@@ -45,7 +45,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 10
+    num_rays = 100
     ### END CONFIG
 
     pg.init()
