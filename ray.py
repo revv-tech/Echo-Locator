@@ -20,7 +20,6 @@ class Ray:
         colorP = (0,0,0)
         colorS = (0, 0, 0)
         self.start = p.pos
-        #print(p.pos)
         self.end.from_polar((10000, self.heading))
 
         closest = float("inf")
@@ -49,17 +48,25 @@ class Ray:
             if u >= 0 and 0 <= t <= 1:
                 x = x1 + t * (x2 - x1)
                 y = y1 + t * (y2 - y1)
+                #Distancia del rayo al bounderie
                 dist = self.start.distance_to((x, y))
+                #Intensidad del rayo
+                intensidad = (1-(dist/500))**2
+                
                 if dist < closest:
                     closest = dist
                     new_end.xy = x, y
+                
 
         if closest == float("inf"):
             self.end = self.start
             self.image = None
+            
         else:
             self.end = new_end
+            
             if self.flagPrimary:
+                print(intensidad)
                 
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
                 drawline(screen, pg.Color('white'), self.end, self.end, 1) # COLOR
