@@ -102,7 +102,7 @@ def main():
                 if event.key == pygame.K_BACKSPACE:
                     rays = rayEditor(segment,num_rays,p)
                 #CAMBIAN LOS SECTORES
-                if event.key == pygame.K_0:
+                if event.key == pygame.K_4:
                     segment = 0
                     rays = rayEditor(segment,num_rays,p)
                 if event.key == pygame.K_1:

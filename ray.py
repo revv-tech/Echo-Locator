@@ -19,6 +19,8 @@ class Ray:
 
         colorP = (0,0,0)
         colorS = (0, 0, 0)
+        white = [255,255,255]
+        light = [1, 1, 0.75]
         self.start = p.pos
         self.end.from_polar((10000, self.heading))
 
@@ -63,13 +65,14 @@ class Ray:
             self.image = None
             
         else:
+            
             self.end = new_end
             
             if self.flagPrimary:
-                print(intensidad)
-                
+                #print(intensidad)
+                white =  light * white
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
-                drawline(screen, pg.Color('white'), self.end, self.end, 1) # COLOR
+                drawline(screen, white, self.end, self.end, 1) # COLOR
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR
