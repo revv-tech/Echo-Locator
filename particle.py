@@ -3,11 +3,11 @@ from random import randint
 
 
 class Particle:
-    def __init__(self):
+    def __init__(self, _pos):
         info = pg.display.Info()
         self.image = None
         pg.math.Vector2()
-        self.pos = pg.Vector2(250,250)
+        self.pos = _pos
         self.heading = 0
         self.vel = pg.math.Vector2((0, 0))
 

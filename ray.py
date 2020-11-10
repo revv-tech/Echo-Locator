@@ -7,21 +7,20 @@ drawline = pg.draw.line
 
 class Ray:
     #E: SONAR, ANGULO(Heading), FLAG VERIFICADOR DE PRIMARIO
-    def __init__(self, p: Particle, heading: float = 0, flagPrimary: bool = True):
-        self.start = p.pos
+    def __init__(self, pos, heading: float = 0, flagPrimary: bool = True):
+        self.start = pos
         self.heading = heading
         self.end: pg.math.Vector2 = pg.math.Vector2()
         self.image = None
         self.flagPrimary = flagPrimary
+
     
+    def update(self, screen: pg.display, boundaries: list):
 
-    def update(self, screen: pg.display, p: Particle, boundaries: list):
-
-        colorP = (0,0,0)
-        colorS = (0, 0, 0)
+        colorP = (0,100,0)
+        colorS = (0, 100, 0)
         white = (255,255,255)
         light = [1, 1, 0.75]
-        self.start = p.pos
         self.end.from_polar((10000, self.heading))
 
         closest = float("inf")
@@ -74,7 +73,8 @@ class Ray:
                 color =  (((x+y)/2) * intensidad)
                 white = (color,color,color)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
-                drawline(screen, white, self.end, self.end, 1) # COLOR
+                #drawline(screen, white, self.end, self.end, 1) # COLOR
+                
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR

@@ -8,5 +8,5 @@ class Boundary:
         self.image = None
 
     def update(self, screen: pg.display):
-        self.image = pg.draw.line(screen, pg.Color('black'), self.start, self.end, 2)
+        self.image = pg.draw.line(screen, pg.Color('white'), self.start, self.end, 2)
 
