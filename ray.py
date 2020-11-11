@@ -17,7 +17,7 @@ class Ray:
     
     def update(self, screen: pg.display, boundaries: list):
 
-        colorP = (0,100,0)
+        colorP = (0,0,0)
         colorS = (0, 100, 0)
         white = (255,255,255)
         light = [1, 1, 0.75]
@@ -70,11 +70,13 @@ class Ray:
             
             if self.flagPrimary:
                 
-                color =  (((x+y)/2) * intensidad)
-                white = (color,color,color)
+                #color =  (((x+y)/2) * intensidad)
+                #if color > 255:
+                 #   color = 255
+                    
+                white = (255,255,255)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
-                #drawline(screen, white, self.end, self.end, 1) # COLOR
-                
+                self.image = drawline(screen, white, self.end, self.end, 1) # COLOR
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR

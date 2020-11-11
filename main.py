@@ -7,6 +7,7 @@ from ray import Ray
 from PIL import Image
 
 drawline = pg.draw.line
+rays = []
 
 #AUXILIAR
 #E: Lista de Rayos y un entero
@@ -30,9 +31,11 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 2
+    num_rays = 10
     rays2 = []
+    pixels = []
     white = (255,255,255)
+    #global rays
     ### END CONFIG
 
     pg.init()
@@ -91,40 +94,53 @@ def main():
                 
                 #CAMBIAN LOS SECTORES
                 if event.key == pygame.K_4:
-                    
-                    segment = 0
-                    screen.fill((0, 0, 0))
-                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-                    p.update(screen)
-                    pg.display.update()
-                    pg.time.wait(75)
+
+                    for i in range(0, 20):
+                        segment = 0
+                        screen.fill((0, 0, 0))
+                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        p.update(screen)
+                        pg.display.update()
+                        pg.time.wait(75)
                     
                 elif event.key == pygame.K_1:
                     
-                    segment = 180
-                    screen.fill((0, 0, 0))
-                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-                    p.update(screen)
-                    pg.display.update()
-                    pg.time.wait(75)
+                    for i in range(0, 20):
+                        segment = 0
+                        screen.fill((0, 0, 0))
+                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        p.update(screen)
+                        pg.display.update()
+                        pg.time.wait(75)
                     
                 elif event.key == pygame.K_2:
                     
-                    segment = 270
-                    screen.fill((0, 0, 0))
-                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-                    p.update(screen)
-                    pg.display.update()
-                    pg.time.wait(75)
+                    for i in range(0, 20):
+                        segment = 0
+                        screen.fill((0, 0, 0))
+                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        p.update(screen)
+                        pg.display.update()
+                        pg.time.wait(75)
                     
                 elif event.key == pygame.K_3:
-                    
-                    segment = 90
                     screen.fill((0, 0, 0))
-                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-                    p.update(screen)
-                    pg.display.update()
-                    pg.time.wait(75) 
+                    for i in range(0, 20):
+                        segment = 0
+                        
+                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+
+                        for ray in rays:
+                            pix = (ray.end.x, ray.end.y)
+                            pixels.append(pix)
+                        rays = []
+                        print(len(pixels))
+                        for pix in pixels:
+                            drawline(screen, white, pix[0], pix[1], 1)
+                            
+                        p.update(screen)
+                        pg.display.update()
+                        pg.time.wait(75)
 
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
 
@@ -132,7 +148,6 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
         return
     
     rays = rayEditor(segment, num_rays, start)
-    
                             
     for b in boundaries:
         b.update(screen)
@@ -142,7 +157,7 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
                                 
     for i in range(0, len(rays)):
 
-        rayCaster(segment+180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
+        rayCaster(rays[i].heading + 180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
                              
                                 
                    
