@@ -93,27 +93,46 @@ def main():
                 if event.key == pygame.K_4:
                     
                     segment = 0
-                    rayCaster(segment, num_rays, screen, boundaries, p)
+                    screen.fill((0, 0, 0))
+                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                    p.update(screen)
+                    pg.display.update()
+                    pg.time.wait(75)
                     
                 elif event.key == pygame.K_1:
                     
                     segment = 180
-                    rayCaster(segment, num_rays, screen, boundaries, p)
+                    screen.fill((0, 0, 0))
+                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                    p.update(screen)
+                    pg.display.update()
+                    pg.time.wait(75)
                     
                 elif event.key == pygame.K_2:
                     
                     segment = 270
-                    rayCaster(segment, num_rays, screen, boundaries, p)
+                    screen.fill((0, 0, 0))
+                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                    p.update(screen)
+                    pg.display.update()
+                    pg.time.wait(75)
                     
                 elif event.key == pygame.K_3:
                     
                     segment = 90
-                    rayCaster(segment, num_rays, screen, boundaries, p)
+                    screen.fill((0, 0, 0))
+                    rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                    p.update(screen)
+                    pg.display.update()
+                    pg.time.wait(75) 
 
-def rayCaster(segment, num_rays, screen, boundaries, p):
+def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
 
-    rays = rayEditor(segment, num_rays, pg.Vector2(250,250))
-    screen.fill((0, 0, 0))
+    if bounce == 3:
+        return
+    
+    rays = rayEditor(segment, num_rays, start)
+    
                             
     for b in boundaries:
         b.update(screen)
@@ -121,28 +140,12 @@ def rayCaster(segment, num_rays, screen, boundaries, p):
     for ray in rays:
         ray.update(screen, boundaries)
                                 
-    #print("RAY")
-    #print("Start: ", rays[0].start, " End: ", rays[0].end, " Heading: ", rays[0].heading)
     for i in range(0, len(rays)):
 
-        if segment == 270:
-            
-            rays2 = rayEditor(segment-180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y))
-
-        else:
-            rays2 = rayEditor(segment+180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y))
+        rayCaster(segment+180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
                              
-    for b in boundaries:
-        b.update(screen)
-                            
-    for ray in rays2:
-        ray.update(screen, boundaries)
                                 
-    #print("RAY2")
-    #print("Start: ", rays2[0].start, " End: ", rays2[0].end, " Heading: ", rays2[0].heading)                        
-    p.update(screen)
-    pg.display.update()
-    pg.time.wait(75)                    
+                   
 
 
 if __name__ == "__main__":
