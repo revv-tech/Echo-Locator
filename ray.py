@@ -4,7 +4,6 @@ import decimal
 
 drawline = pg.draw.line
 
-
 class Ray:
     #E: SONAR, ANGULO(Heading), FLAG VERIFICADOR DE PRIMARIO
     def __init__(self, pos, heading: float = 0, flagPrimary: bool = True):
@@ -16,7 +15,7 @@ class Ray:
 
     
     def update(self, screen: pg.display, boundaries: list):
-
+        global rays
         colorP = (0,0,0)
         colorS = (0, 100, 0)
         white = (255,255,255)
@@ -77,6 +76,7 @@ class Ray:
                 white = (255,255,255)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
                 self.image = drawline(screen, white, self.end, self.end, 1) # COLOR
+                rays.append(self)
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR

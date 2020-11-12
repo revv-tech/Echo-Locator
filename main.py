@@ -7,7 +7,6 @@ from ray import Ray
 from PIL import Image
 
 drawline = pg.draw.line
-rays = []
 
 #AUXILIAR
 #E: Lista de Rayos y un entero
