@@ -8,6 +8,9 @@ from PIL import Image
 
 drawline = pg.draw.line
 
+rays = []
+pixels = []
+
 #AUXILIAR
 #E: Lista de Rayos y un entero
 #S: Una nueva lista de rayos
@@ -22,7 +25,19 @@ def rayEditor(segment, num_rays, start):
         #rays.append(Ray(start, (x + segment) - 1, False))
 
     return rays
+
+def getPixels(rays,pixList):
     
+    if not rays:
+        return pixList
+    else:
+        pix = (rays[0].end.x,rays[0].end.y)
+        
+        if pix not in pixels:
+            return getPixels(rays[1:],pixList + [pix])
+        else:
+            return getPixels(rays[1:],pixList)
+        
 def main():
     ### CONFIG
     screen_w = 500
@@ -32,7 +47,6 @@ def main():
     segment = 0
     num_rays = 10
     rays2 = []
-    pixels = []
     white = (255,255,255)
     #global rays
     ### END CONFIG
@@ -129,20 +143,18 @@ def main():
                         
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
 
-                        for ray in rays:
-                            pix = (ray.end.x, ray.end.y)
-                            pixels.append(pix)
-                        rays = []
-                        print(len(pixels))
+                        
+                        
                         for pix in pixels:
-                            drawline(screen, white, pix[0], pix[1], 1)
+                            drawline(screen, white, pix, pix, 1)
                             
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
 
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
-
+    global pixels
+    
     if bounce == 3:
         return
     
@@ -153,7 +165,9 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
                             
     for ray in rays:
         ray.update(screen, boundaries)
-                                
+
+    pixels = pixels + getPixels(rays,[])
+    
     for i in range(0, len(rays)):
 
         rayCaster(rays[i].heading + 180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
