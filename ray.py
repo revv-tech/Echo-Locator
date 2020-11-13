@@ -80,4 +80,29 @@ class Ray:
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR
+
+    def pointByDistance(start, point, results, points, recursions):
+
+        if recursions == 0:
+
+            return
+
+        points.append((point.x+1, point.y))
+        points.append((point.x-1, point.y))
+        points.append((point.x, point.y+1))
+        points.append((point.x, point.y-1))
+        points.append((point.x+1, point.y+1))
+        points.append((point.x-1, point.y-1))
+        points.append((point.x+1, point.y-1))
+        points.append((point.x-1, point.y+1))
+
+        for pt in points:
+
+            dist = start.distance_to((pt.x, pt.y))
+            results.append(dist)
+
+        for pt in points:
+            
+            pointByDistance(start, pt, results, points, recursions-1)
+        
     
