@@ -15,18 +15,25 @@ pixels = []
 #E: Lista de Rayos y un entero
 #S: Una nueva lista de rayos
 #D: Crea una nueva lista de rayos ubicados en otro sector
-def rayEditor(segment, num_rays, start):
+def rayEditor(segment, num_rays, start, num_second):
+    
     rays = []
+    second = []
+    
     for i in range(num_rays):
         
         x = randint(0, 90)
-        #rays.append(Ray(start, (x + segment) + 1, False))
         rays.append(Ray(start, (x + segment)))
-        #rays.append(Ray(start, (x + segment) - 1, False))
+        lista = []
+        for i in range(0, num_second):
+            lista.append(Ray(start, (x + segment) + (i+1), False))
+            lista.append(Ray(start, (x + segment) + (i-1), False))
 
-    return rays
+        second.append(lista)
 
-def getPixels(rays,pixList):
+    return [rays, second]
+
+def getPixels(rays, pixList):
     
     if not rays:
         return pixList
@@ -45,10 +52,9 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 10
+    num_rays = 1
     rays2 = []
     white = (255,255,255)
-    #global rays
     ### END CONFIG
 
     pg.init()
@@ -137,13 +143,12 @@ def main():
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_3:
+                    
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
+                        
                         segment = 0
-                        
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-
-                        
                         
                         for pix in pixels:
                             drawline(screen, white, pix, pix, 1)
@@ -153,28 +158,90 @@ def main():
                         pg.time.wait(75)
 
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
+    
     global pixels
     
     if bounce == 3:
         return
     
-    rays = rayEditor(segment, num_rays, start)
-                            
+    num_second = 0
+    result = rayEditor(segment, num_rays, start, num_second)
+    rays = result[0]
+    secondaries = result[1]
+    
     for b in boundaries:
         b.update(screen)
-                            
-    for ray in rays:
-        ray.update(screen, boundaries)
 
+    for i in range(0, len(rays)):
+        
+        rays[i].update(screen, boundaries)
+
+        if num_second > 0:
+            secondaries[i][0].update(screen, boundaries)
+            secondaries[i][1].update(screen, boundaries)
+  
     pixels = pixels + getPixels(rays,[])
+
+    getDirectPix(rays, secondaries, screen, boundaries)
     
     for i in range(0, len(rays)):
 
         rayCaster(rays[i].heading + 180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
-                             
-                                
-                   
+        
 
+def getDirectPix(rays, secondaries, screen, boundaries):
+
+    temp = []
+    pixList = []
+    for ray in rays:
+
+        temp.append(Ray(ray.end, ray.heading, True))
+
+    for ray in temp:
+
+        ray.update(screen, boundaries)
+
+    for ray in temp:
+
+        result = get_points(int(ray.start.x), int(ray.start.y), int(ray.end.x), int(ray.end.y))
+        pixList += [[result]]
+
+                             
+# E: 2 puntos
+# S: Lista de puntos entre los puntos dados
+def get_points(x1, y1, x2, y2):
+    points = []
+    issteep = abs(y2-y1) > abs(x2-x1)
+    if issteep:
+        x1, y1 = y1, x1
+        x2, y2 = y2, x2
+    rev = False
+    if x1 > x2:
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+        rev = True
+    deltax = x2 - x1
+    deltay = abs(y2-y1)
+    error = int(deltax / 2)
+    y = y1
+    ystep = None
+    if y1 < y2:
+        ystep = 1
+    else:
+        ystep = -1
+    for x in range(x1, x2 + 1):
+        if issteep:
+            points.append((y, x))
+        else:
+            points.append((x, y))
+        error -= deltay
+        if error < 0:
+            y += ystep
+            error += deltax
+    # Reverse the list if the coordinates were reversed
+    if rev:
+        points.reverse()
+    return points
 
 if __name__ == "__main__":
     main()

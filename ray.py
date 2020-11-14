@@ -15,7 +15,6 @@ class Ray:
 
     
     def update(self, screen: pg.display, boundaries: list):
-        global rays
         colorP = (0,0,0)
         colorS = (0, 100, 0)
         white = (255,255,255)
@@ -71,38 +70,12 @@ class Ray:
                 
                 #color =  (((x+y)/2) * intensidad)
                 #if color > 255:
-                 #   color = 255
-                    
+                 #   color = 255 
                 white = (255,255,255)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
                 self.image = drawline(screen, white, self.end, self.end, 1) # COLOR
-                rays.append(self)
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR
-
-    def pointByDistance(start, point, results, points, recursions):
-
-        if recursions == 0:
-
-            return
-
-        points.append((point.x+1, point.y))
-        points.append((point.x-1, point.y))
-        points.append((point.x, point.y+1))
-        points.append((point.x, point.y-1))
-        points.append((point.x+1, point.y+1))
-        points.append((point.x-1, point.y-1))
-        points.append((point.x+1, point.y-1))
-        points.append((point.x-1, point.y+1))
-
-        for pt in points:
-
-            dist = start.distance_to((pt.x, pt.y))
-            results.append(dist)
-
-        for pt in points:
-            
-            pointByDistance(start, pt, results, points, recursions-1)
         
     
