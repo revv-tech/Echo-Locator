@@ -36,6 +36,7 @@ def rayEditor(segment, num_rays, start, num_second):
         
 def main():
     ### CONFIG
+    global pixels
     screen_w = 500
     screen_h = 500
     border_on = True
@@ -98,7 +99,7 @@ def main():
                 
                 #CAMBIAN LOS SECTORES
                 if event.key == pygame.K_4:
-
+                    pixels = []
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
                         
@@ -106,48 +107,60 @@ def main():
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            drawline(screen, white, pix, pix, 1)
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            pos = pix[0]
+                            color = pix[1]
+                            #print(pix)
+                            drawline(screen, color, pos, pos, 1)
                             
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_1:
-                    
+                    pixels = []
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
                         
-                        segment = 0
+                        segment = 90
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            drawline(screen, white, pix, pix, 1)
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            pos = pix[0]
+                            color = pix[1]
+                            #print(pix)
+                            drawline(screen, color, pos, pos, 1)
                             
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_2:
-                    
+                    pixels = []
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
                         
-                        segment = 0
+                        segment = 180
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            drawline(screen, white, pix[0], pix[0], 1)
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            pos = pix[0]
+                            color = pix[1]
+                            #print(pix)
+                            drawline(screen, color, pos, pos, 1)
                             
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_3:
-                    
+                    pixels = []
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
                         
-                        segment = 0
+                        segment = 270
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
