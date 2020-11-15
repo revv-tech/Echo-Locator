@@ -52,7 +52,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 1
+    num_rays = 3
     rays2 = []
     white = (255,255,255)
     ### END CONFIG
@@ -84,16 +84,12 @@ def main():
     boundaries.append(Boundary(screen, (350, 30), (400, 20)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
-    #boundaries.append(Boundary(screen, (495, 200), (400, 250)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
     boundaries.append(Boundary(screen, (320, 70), (270, 100)))
     
     boundaries.append(Boundary(screen, (495, 495), (400,495)))
     boundaries.append(Boundary(screen, (300, 400), (400,495)))
-    #boundaries.append(Boundary(screen, (495, 350), (450,320)))
     boundaries.append(Boundary(screen, (495, 350), (450,400)))
-    #boundaries.append(Boundary(screen, (240, 320), (300,300)))
-    #boundaries.append(Boundary(screen, (190, 200), (150,200)))
     boundaries.append(Boundary(screen, (20, 400), (50,350)))
     boundaries.append(Boundary(screen, (20, 400), (60,370)))
     boundaries.append(Boundary(screen, (60, 370), (60,476)))
@@ -114,30 +110,45 @@ def main():
                 #CAMBIAN LOS SECTORES
                 if event.key == pygame.K_4:
 
+                    screen.fill((0, 0, 0))
                     for i in range(0, 20):
+                        
                         segment = 0
-                        screen.fill((0, 0, 0))
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        
+                        for pix in pixels:
+                            drawline(screen, white, pix, pix, 1)
+                            
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_1:
                     
+                    screen.fill((0, 0, 0))
                     for i in range(0, 20):
+                        
                         segment = 0
-                        screen.fill((0, 0, 0))
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        
+                        for pix in pixels:
+                            drawline(screen, white, pix, pix, 1)
+                            
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
                 elif event.key == pygame.K_2:
                     
+                    screen.fill((0, 0, 0))
                     for i in range(0, 20):
+                        
                         segment = 0
-                        screen.fill((0, 0, 0))
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        
+                        for pix in pixels:
+                            drawline(screen, white, pix, pix, 1)
+                            
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
@@ -165,10 +176,10 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
         return
     
     num_second = 0
-    result = rayEditor(segment, num_rays, start, num_second)
+    result = rayEditor(segment, num_rays, start, 2)
     rays = result[0]
     secondaries = result[1]
-    
+   
     for b in boundaries:
         b.update(screen)
 
@@ -182,12 +193,35 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
   
     pixels = pixels + getPixels(rays,[])
 
-    getDirectPix(rays, secondaries, screen, boundaries)
-    
+    pixs = getDirectPix(rays, secondaries, screen, boundaries)
+
     for i in range(0, len(rays)):
 
         rayCaster(rays[i].heading + 180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
+
         
+def getClosestPixel(lista, ray):
+
+    distances = []
+
+    for pix in lista:
+
+        dist = ray.start.distance_to(pix)
+        distances.append(dist)
+
+    closest = 100000000
+    index = 0
+    for i in range(0, len(distances)):
+
+        diff = abs(dist - ray.dist)
+        if  diff < closest:
+
+            closest = diff
+            index = i
+
+    return lista[index]
+    
+
 
 def getDirectPix(rays, secondaries, screen, boundaries):
 
@@ -203,8 +237,21 @@ def getDirectPix(rays, secondaries, screen, boundaries):
 
     for ray in temp:
 
+        pt1 = (int(ray.start.x), int(ray.start.y))
+        pt2 = (int(ray.end.x), int(ray.end.y))
         result = get_points(int(ray.start.x), int(ray.start.y), int(ray.end.x), int(ray.end.y))
-        pixList += [[result]]
+        
+        if pt1 in result:
+            result.remove(pt1)
+
+        if pt2 in result:
+            result.remove(pt2)
+            
+        pixList += [result]
+
+    return pixList
+
+    
 
                              
 # E: 2 puntos

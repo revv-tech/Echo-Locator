@@ -6,12 +6,13 @@ drawline = pg.draw.line
 
 class Ray:
     #E: SONAR, ANGULO(Heading), FLAG VERIFICADOR DE PRIMARIO
-    def __init__(self, pos, heading: float = 0, flagPrimary: bool = True):
+    def __init__(self, pos, heading: float = 0, flagPrimary: bool = True, dist = 0):
         self.start = pos
         self.heading = heading
         self.end: pg.math.Vector2 = pg.math.Vector2()
         self.image = None
         self.flagPrimary = flagPrimary
+        self.dist = dist
 
     
     def update(self, screen: pg.display, boundaries: list):
@@ -48,16 +49,17 @@ class Ray:
                 x = x1 + t * (x2 - x1)
                 y = y1 + t * (y2 - y1)
                 #Distancia del rayo al bounderie
-                dist = self.start.distance_to((x, y))
+                distance = self.start.distance_to((x, y))
                 #Intensidad del rayo
-                intensidad = (1-(dist/500))**2
+                intensidad = (1-(distance/500))**2
                 intensidad = max(0, min(intensidad, 255))
                 #print(intensidad)
-                if dist < closest:
-                    closest = dist
+                if distance < closest:
+                    closest = distance
                     new_end.xy = x, y
                 
-
+        self.dist = distance
+        
         if closest == float("inf"):
             self.end = self.start
             self.image = None
@@ -65,7 +67,7 @@ class Ray:
         else:
             
             self.end = new_end
-            
+          
             if self.flagPrimary:
                 
                 #color =  (((x+y)/2) * intensidad)
