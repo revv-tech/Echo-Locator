@@ -41,7 +41,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 6
+    num_rays = 8
     rays2 = []
     white = (255,255,255)
     ### END CONFIG
@@ -152,7 +152,10 @@ def main():
                         
                         for pix in pixels:
                             #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
-                            drawline(screen, (pix[1],pix[1],pix[1]), pix[0], pix[0], 1)
+                            pos = pix[0]
+                            color = pix[1]
+                            #print(pix)
+                            drawline(screen, color, pos, pos, 1)
                             
                         p.update(screen)
                         pg.display.update()
@@ -182,24 +185,24 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
             secondaries[i][0].update(screen, boundaries)
             secondaries[i][1].update(screen, boundaries)
   
-    pixels = pixels + getPixels(rays,[])
+    pixels = pixels + getPixels(rays,[],bounce)
 
     pixs = getDirectPix(rays, secondaries, screen, boundaries)
-
+    
     for i in range(0, len(pixs)):
 
         for j in range(0, len(secondaries[i])):
             
             if pixs[i] != []:
-                pixel = getClosestPixel(pixs[i], secondaries[i][j])
+                pixel = getClosestPixel(pixs[i], secondaries[i][j],bounce)
                 pixels = pixels + [pixel]
-
+    
     for i in range(0, len(rays)):
 
         rayCaster(rays[i].heading + 180, num_rays, pg.Vector2(rays[i].end.x, rays[i].end.y), screen, boundaries, p, bounce+1)
 
         
-def getClosestPixel(lista, ray):
+def getClosestPixel(lista, ray, bounce):
 
     distances = []
 
@@ -210,6 +213,7 @@ def getClosestPixel(lista, ray):
 
     closest = 100000000
     index = 0
+    
     for i in range(0, len(distances)):
 
         diff = abs(distances[i] - ray.dist)
@@ -218,10 +222,14 @@ def getClosestPixel(lista, ray):
             closest = diff
             index = i
             
-    return lista[index]
+    #Calculo de Intensidad
+    color = getIntensidad(ray.dist,bounce,True)
+    #Elemento de Lista Pixeles
+    elem = [lista[index],color]
+    return elem
 
 #OBTIENE LISTA DE PIXELES DE RAYOS PRIMARIOS
-def getPixels(rays, pixList):
+def getPixels(rays, pixList,bounce):
     
     if not rays:
         return pixList
@@ -229,22 +237,34 @@ def getPixels(rays, pixList):
         #Ubicacion del pixel
         pix = (rays[0].end.x,rays[0].end.y)
         #Calculo de intensidad
-        intensidad = getIntensidad(rays[0].dist)
+        intensidad = getIntensidad(rays[0].dist,bounce)
         #ELEMENTO DE LISTA
         fullPixel = [pix] + [intensidad]
+        
         if pix not in pixels:
-            return getPixels(rays[1:],pixList + [fullPixel])
+            return getPixels(rays[1:],pixList + [fullPixel],bounce)
         else:
-            return getPixels(rays[1:],pixList)
+            return getPixels(rays[1:],pixList,bounce)
         
 #OBTENER INTESIDAD
-def getIntensidad(distance):
+def getIntensidad(distance,bounce,flagSecondary = False):
 
     intensidad = (1-(distance/500))**2
     intensidad = max(0, min(intensidad, 255))
     intensidad =  (255 * intensidad)
     
-    return intensidad
+    if intensidad > 255:
+        intensidad = 255
+        
+    if bounce == 0:
+        color = (intensidad,intensidad,intensidad)
+        return color
+    #Calcula la intensidad de acuerdo al rebote
+    intensidad = intensidad - (intensidad * (bounce/100))
+    #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
+    if flagSecondary:
+        intensidad = intensidad - (intensidad * 0.25)
+    return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
 def getDirectPix(rays, secondaries, screen, boundaries):

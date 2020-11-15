@@ -49,7 +49,7 @@ class Ray:
                 x = x1 + t * (x2 - x1)
                 y = y1 + t * (y2 - y1)
                 #Distancia del rayo al bounderie
-                #distance = self.start.distance_to((x, y))
+                distance = self.start.distance_to((x, y))
                 #Intensidad del rayo
                 #intensidad = (1-(distance/500))**2
                 #intensidad = max(0, min(intensidad, 255))
