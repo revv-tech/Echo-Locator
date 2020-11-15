@@ -33,17 +33,6 @@ def rayEditor(segment, num_rays, start, num_second):
 
     return [rays, second]
 
-def getPixels(rays, pixList):
-    
-    if not rays:
-        return pixList
-    else:
-        pix = (rays[0].end.x,rays[0].end.y)
-        
-        if pix not in pixels:
-            return getPixels(rays[1:],pixList + [pix])
-        else:
-            return getPixels(rays[1:],pixList)
         
 def main():
     ### CONFIG
@@ -147,7 +136,7 @@ def main():
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            drawline(screen, white, pix, pix, 1)
+                            drawline(screen, white, pix[0], pix[0], 1)
                             
                         p.update(screen)
                         pg.display.update()
@@ -162,7 +151,8 @@ def main():
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            drawline(screen, white, pix, pix, 1)
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            drawline(screen, (pix[1],pix[1],pix[1]), pix[0], pix[0], 1)
                             
                         p.update(screen)
                         pg.display.update()
@@ -186,8 +176,9 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     for i in range(0, len(rays)):
         
         rays[i].update(screen, boundaries)
-
+        
         if num_second > 0:
+            
             secondaries[i][0].update(screen, boundaries)
             secondaries[i][1].update(screen, boundaries)
   
@@ -220,9 +211,34 @@ def getClosestPixel(lista, ray):
             index = i
 
     return lista[index]
+
+#OBTIENE LISTA DE PIXELES DE RAYOS PRIMARIOS
+def getPixels(rays, pixList):
     
+    if not rays:
+        return pixList
+    else:
+        #Ubicacion del pixel
+        pix = (rays[0].end.x,rays[0].end.y)
+        #Calculo de intensidad
+        intensidad = getIntensidad(rays[0].dist)
+        #ELEMENTO DE LISTA
+        fullPixel = [pix] + [intensidad]
+        if pix not in pixels:
+            return getPixels(rays[1:],pixList + [fullPixel])
+        else:
+            return getPixels(rays[1:],pixList)
+        
+#OBTENER INTESIDAD
+def getIntensidad(distance):
 
+    intensidad = (1-(distance/500))**2
+    intensidad = max(0, min(intensidad, 255))
+    intensidad =  (255 * intensidad)
+    
+    return intensidad
 
+#OBTENER PICS DE LOS SECUNDARIOS
 def getDirectPix(rays, secondaries, screen, boundaries):
 
     temp = []

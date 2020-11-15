@@ -49,10 +49,10 @@ class Ray:
                 x = x1 + t * (x2 - x1)
                 y = y1 + t * (y2 - y1)
                 #Distancia del rayo al bounderie
-                distance = self.start.distance_to((x, y))
+                #distance = self.start.distance_to((x, y))
                 #Intensidad del rayo
-                intensidad = (1-(distance/500))**2
-                intensidad = max(0, min(intensidad, 255))
+                #intensidad = (1-(distance/500))**2
+                #intensidad = max(0, min(intensidad, 255))
                 #print(intensidad)
                 if distance < closest:
                     closest = distance
@@ -73,9 +73,8 @@ class Ray:
                 #color =  (((x+y)/2) * intensidad)
                 #if color > 255:
                  #   color = 255 
-                white = (255,255,255)
                 self.image = drawline(screen, colorP, self.start, self.end, 1) # COLOR
-                self.image = drawline(screen, white, self.end, self.end, 1) # COLOR
+                #self.image = drawline(screen, white, self.end, self.end, 1) # COLOR
                 
             else:
                 self.image = drawline(screen, colorS, self.start, self.end, 1) # COLOR
