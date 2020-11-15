@@ -52,7 +52,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 3
+    num_rays = 6
     rays2 = []
     white = (255,255,255)
     ### END CONFIG
@@ -176,7 +176,7 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
         return
     
     num_second = 0
-    result = rayEditor(segment, num_rays, start, 2)
+    result = rayEditor(segment, num_rays, start, 4)
     rays = result[0]
     secondaries = result[1]
    
@@ -194,6 +194,14 @@ def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     pixels = pixels + getPixels(rays,[])
 
     pixs = getDirectPix(rays, secondaries, screen, boundaries)
+
+    for i in range(0, len(pixs)):
+
+        for j in range(0, len(secondaries[i])):
+            
+            if pixs[i] != []:
+                pixel = getClosestPixel(pixs[i], secondaries[i][j])
+                pixels = pixels + [pixel]
 
     for i in range(0, len(rays)):
 
@@ -213,12 +221,12 @@ def getClosestPixel(lista, ray):
     index = 0
     for i in range(0, len(distances)):
 
-        diff = abs(dist - ray.dist)
+        diff = abs(distances[i] - ray.dist)
         if  diff < closest:
 
             closest = diff
             index = i
-
+            
     return lista[index]
     
 
