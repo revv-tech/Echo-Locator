@@ -288,9 +288,9 @@ def getPixels(rays, pixList,bounce):
 def getIntensidad(distance,bounce,flagSecondary = False):
 
     intensidad = (1-(distance/500))**2
-    intensidad = max(0, min(intensidad, 255))
+    #intensidad = max(0, min(intensidad, 255))
     intensidad =  (255 * intensidad)
-    
+    #print(intensidad)
     if intensidad > 255:
         intensidad = 255
         
@@ -298,10 +298,15 @@ def getIntensidad(distance,bounce,flagSecondary = False):
         color = (intensidad,intensidad,intensidad)
         return color
     #Calcula la intensidad de acuerdo al rebote
-    intensidad = intensidad - (intensidad * (bounce/100))
+    if bounce == 1:
+        intensidad = intensidad - ((intensidad * 0.5))
+    if bounce == 2:
+        intensidad = intensidad - ((intensidad * 0.25))
+    if bounce == 3:
+        intensidad = intensidad - ((intensidad * 0.25))
     #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
     if flagSecondary:
-        intensidad = intensidad - (intensidad * 0.25)
+        intensidad = intensidad - (intensidad * 0.70)
     return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
