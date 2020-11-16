@@ -5,6 +5,7 @@ from boundary import Boundary
 from particle import Particle
 from ray import Ray
 from PIL import Image
+import time
 
 drawline = pg.draw.line
 
@@ -36,6 +37,7 @@ def rayEditor(segment, num_rays, start, num_second):
         
 def main():
     ### CONFIG
+    start_time = time.time()
     global pixels
     screen_w = 500
     screen_h = 500
@@ -134,7 +136,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    
+                    print("--- %s seconds ---" % (time.time() - start_time))
                 elif event.key == pygame.K_1:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -156,6 +158,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
+                    print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_2:
                     pixels = []
@@ -177,6 +180,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
+                    print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_3:
                     pixels = []
@@ -198,7 +202,8 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-
+                    print("--- %s seconds ---" % (time.time() - start_time))
+            
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     
     global pixels
