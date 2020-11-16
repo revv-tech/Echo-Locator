@@ -5,7 +5,6 @@ from boundary import Boundary
 from particle import Particle
 from ray import Ray
 from PIL import Image
-import time
 
 drawline = pg.draw.line
 
@@ -37,7 +36,6 @@ def rayEditor(segment, num_rays, start, num_second):
         
 def main():
     ### CONFIG
-    #start_time = time.time()
     global pixels
     screen_w = 500
     screen_h = 500
@@ -139,7 +137,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
+                    
                 elif event.key == pygame.K_1:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -150,10 +148,10 @@ def main():
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            PIX = PIX[0] => PIXEL, PIX[1] = COLOR
                             pos = pix[0]
                             color = pix[1]
-                            #print(pix)
+                            print(pix)
                             drawline(screen, color, pos, pos, 1)
 
                         drawline(screen, blue, (250, 250), (250, 0), 1)
@@ -161,7 +159,6 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_2:
                     pixels = []
@@ -183,7 +180,6 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_3:
                     pixels = []
@@ -205,8 +201,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
-            
+
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     
     global pixels
