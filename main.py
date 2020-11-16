@@ -148,7 +148,7 @@ def main():
                         rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
                         
                         for pix in pixels:
-                            PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
                             pos = pix[0]
                             color = pix[1]
                             print(pix)
