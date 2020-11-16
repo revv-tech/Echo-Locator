@@ -42,9 +42,10 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 8
+    num_rays = 1
     rays2 = []
     white = (255,255,255)
+    blue = (0, 0, 255)
     ### END CONFIG
 
     pg.init()
@@ -101,6 +102,7 @@ def main():
                 if event.key == pygame.K_4:
                     pixels = []
                     screen.fill((0, 0, 0))
+                    
                     for i in range(0, 20):
                         
                         segment = 0
@@ -112,7 +114,10 @@ def main():
                             color = pix[1]
                             #print(pix)
                             drawline(screen, color, pos, pos, 1)
-                            
+
+
+                        drawline(screen, blue, (250, 250), (500, 250), 1)
+                        drawline(screen, blue, (250, 250), (250, 500), 1)
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
@@ -120,25 +125,7 @@ def main():
                 elif event.key == pygame.K_1:
                     pixels = []
                     screen.fill((0, 0, 0))
-                    for i in range(0, 20):
-                        
-                        segment = 90
-                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
-                        
-                        for pix in pixels:
-                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
-                            pos = pix[0]
-                            color = pix[1]
-                            #print(pix)
-                            drawline(screen, color, pos, pos, 1)
-                            
-                        p.update(screen)
-                        pg.display.update()
-                        pg.time.wait(75)
                     
-                elif event.key == pygame.K_2:
-                    pixels = []
-                    screen.fill((0, 0, 0))
                     for i in range(0, 20):
                         
                         segment = 180
@@ -150,12 +137,14 @@ def main():
                             color = pix[1]
                             #print(pix)
                             drawline(screen, color, pos, pos, 1)
-                            
+
+                        drawline(screen, blue, (250, 250), (250, 0), 1)
+                        drawline(screen, blue, (250, 250), (0, 250), 1)
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
                     
-                elif event.key == pygame.K_3:
+                elif event.key == pygame.K_2:
                     pixels = []
                     screen.fill((0, 0, 0))
                     for i in range(0, 20):
@@ -169,7 +158,30 @@ def main():
                             color = pix[1]
                             #print(pix)
                             drawline(screen, color, pos, pos, 1)
-                            
+
+                        drawline(screen, blue, (250, 250), (250, 0), 1)
+                        drawline(screen, blue, (250, 250), (500, 250), 1)                           
+                        p.update(screen)
+                        pg.display.update()
+                        pg.time.wait(75)
+                    
+                elif event.key == pygame.K_3:
+                    pixels = []
+                    screen.fill((0, 0, 0))
+                    for i in range(0, 20):
+                        
+                        segment = 90
+                        rayCaster(segment, num_rays, pg.Vector2(250, 250), screen, boundaries, p, 0)
+                        
+                        for pix in pixels:
+                            #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
+                            pos = pix[0]
+                            color = pix[1]
+                            #print(pix)
+                            drawline(screen, color, pos, pos, 1)
+
+                        drawline(screen, blue, (250, 250), (0, 250), 1)
+                        drawline(screen, blue, (250, 250), (250, 500), 1)                             
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
