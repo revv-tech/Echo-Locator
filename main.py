@@ -42,7 +42,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 1
+    num_rays = 8
     rays2 = []
     white = (255,255,255)
     blue = (0, 0, 255)
@@ -66,28 +66,41 @@ def main():
         boundaries.append(Boundary(screen, (0, screen_h), (0, 0)))
 
      #BOUNDERIES
+    # BLOQUE 1
     boundaries.append(Boundary(screen, (20, 85), (50, 30)))
     boundaries.append(Boundary(screen, (50, 30), (100, 30)))
-    boundaries.append(Boundary(screen, (250, 30), (200, 30)))
-    boundaries.append(Boundary(screen, (250, 30), (300, 10)))
-    boundaries.append(Boundary(screen, (10, 200), (50, 230)))    
+    boundaries.append(Boundary(screen, (250, 30), (200, 30)))  
+    boundaries.append(Boundary(screen, (10, 200), (50, 230)))
+    boundaries.append(Boundary(screen, (130, 100), (170, 140)))
+    boundaries.append(Boundary(screen, (150, 120), (100, 130)))
+
+    # BLOQUE 2
+    boundaries.append(Boundary(screen, (250, 30), (300, 10)))    
     boundaries.append(Boundary(screen, (450, 30), (495, 70)))
     boundaries.append(Boundary(screen, (350, 30), (400, 20)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
     boundaries.append(Boundary(screen, (495, 70), (495, 200)))
     boundaries.append(Boundary(screen, (320, 70), (270, 100)))
+    boundaries.append(Boundary(screen, (410, 100), (390, 150)))
+    boundaries.append(Boundary(screen, (410, 100), (340, 110)))
     
-    boundaries.append(Boundary(screen, (495, 495), (400,495)))
-    boundaries.append(Boundary(screen, (300, 400), (400,495)))
-    boundaries.append(Boundary(screen, (495, 350), (450,400)))
     boundaries.append(Boundary(screen, (20, 400), (50,350)))
     boundaries.append(Boundary(screen, (20, 400), (60,370)))
     boundaries.append(Boundary(screen, (60, 370), (60,476)))
     boundaries.append(Boundary(screen, (80, 400), (60,476)))
-    boundaries.append(Boundary(screen, (150, 390), (150,450)))
     boundaries.append(Boundary(screen, (300, 485), (150,450)))
     boundaries.append(Boundary(screen, (90, 300), (50,250)))
+    boundaries.append(Boundary(screen, (150, 390), (150,450)))
+    
+    boundaries.append(Boundary(screen, (495, 495), (400,495)))
+    boundaries.append(Boundary(screen, (300, 400), (400,495)))
+    boundaries.append(Boundary(screen, (495, 300), (480,400)))
+    boundaries.append(Boundary(screen, (400, 300), (330,360)))
+    boundaries.append(Boundary(screen, (420, 320), (350,380)))
+    boundaries.append(Boundary(screen, (440, 340), (370,400)))
+    
+
  
     while running:
      
