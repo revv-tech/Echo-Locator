@@ -42,7 +42,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 8
+    num_rays = 9
     rays2 = []
     white = (255,255,255)
     blue = (0, 0, 255)
@@ -299,14 +299,15 @@ def getIntensidad(distance,bounce,flagSecondary = False):
         return color
     #Calcula la intensidad de acuerdo al rebote
     if bounce == 1:
-        intensidad = intensidad - ((intensidad * 0.5))
+        intensidad = intensidad - ((intensidad * 0.25))
     if bounce == 2:
         intensidad = intensidad - ((intensidad * 0.25))
     if bounce == 3:
         intensidad = intensidad - ((intensidad * 0.25))
     #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
     if flagSecondary:
-        intensidad = intensidad - (intensidad * 0.70)
+        intensidad = intensidad - (intensidad * 0.25)
+        
     return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
