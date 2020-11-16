@@ -42,7 +42,7 @@ def main():
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 9
+    num_rays = 8
     rays2 = []
     white = (255,255,255)
     blue = (0, 0, 255)
@@ -65,7 +65,8 @@ def main():
         boundaries.append(Boundary(screen, (screen_w, screen_h), (0, screen_h)))
         boundaries.append(Boundary(screen, (0, screen_h), (0, 0)))
 
-     #BOUNDERIES
+    #BOUNDARIES
+        
     # BLOQUE 1
     boundaries.append(Boundary(screen, (20, 85), (50, 30)))
     boundaries.append(Boundary(screen, (50, 30), (100, 30)))
@@ -84,7 +85,8 @@ def main():
     boundaries.append(Boundary(screen, (320, 70), (270, 100)))
     boundaries.append(Boundary(screen, (410, 100), (390, 150)))
     boundaries.append(Boundary(screen, (410, 100), (340, 110)))
-    
+
+    # BLOQUE 3
     boundaries.append(Boundary(screen, (20, 400), (50,350)))
     boundaries.append(Boundary(screen, (20, 400), (60,370)))
     boundaries.append(Boundary(screen, (60, 370), (60,476)))
@@ -92,7 +94,8 @@ def main():
     boundaries.append(Boundary(screen, (300, 485), (150,450)))
     boundaries.append(Boundary(screen, (90, 300), (50,250)))
     boundaries.append(Boundary(screen, (150, 390), (150,450)))
-    
+
+    # BLOQUE 4
     boundaries.append(Boundary(screen, (495, 495), (400,495)))
     boundaries.append(Boundary(screen, (300, 400), (400,495)))
     boundaries.append(Boundary(screen, (495, 300), (480,400)))
@@ -288,9 +291,9 @@ def getPixels(rays, pixList,bounce):
 def getIntensidad(distance,bounce,flagSecondary = False):
 
     intensidad = (1-(distance/500))**2
-    #intensidad = max(0, min(intensidad, 255))
+    intensidad = max(0, min(intensidad, 255))
     intensidad =  (255 * intensidad)
-    #print(intensidad)
+    
     if intensidad > 255:
         intensidad = 255
         
@@ -298,16 +301,10 @@ def getIntensidad(distance,bounce,flagSecondary = False):
         color = (intensidad,intensidad,intensidad)
         return color
     #Calcula la intensidad de acuerdo al rebote
-    if bounce == 1:
-        intensidad = intensidad - ((intensidad * 0.25))
-    if bounce == 2:
-        intensidad = intensidad - ((intensidad * 0.25))
-    if bounce == 3:
-        intensidad = intensidad - ((intensidad * 0.25))
+    intensidad = intensidad - (intensidad * (bounce/100))
     #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
     if flagSecondary:
         intensidad = intensidad - (intensidad * 0.25)
-        
     return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
