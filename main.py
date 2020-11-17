@@ -137,7 +137,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    
+                    print("Done!")
                 elif event.key == pygame.K_1:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -151,7 +151,7 @@ def main():
                             #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
                             pos = pix[0]
                             color = pix[1]
-                            print(pix)
+                            #print(pix)
                             drawline(screen, color, pos, pos, 1)
 
                         drawline(screen, blue, (250, 250), (250, 0), 1)
@@ -159,7 +159,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    
+                    print("Done!")
                 elif event.key == pygame.K_2:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -180,7 +180,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    
+                    print("Done!")
                 elif event.key == pygame.K_3:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -201,7 +201,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-
+                    print("Done!")
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     
     global pixels
@@ -301,10 +301,10 @@ def getIntensidad(distance,bounce,flagSecondary = False):
         color = (intensidad,intensidad,intensidad)
         return color
     #Calcula la intensidad de acuerdo al rebote
-    intensidad = intensidad - (intensidad * (bounce/100))
+    intensidad = intensidad - (intensidad * 0.50)
     #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
     if flagSecondary:
-        intensidad = intensidad - (intensidad * 0.25)
+        intensidad = intensidad - (intensidad * 0.50)
     return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
