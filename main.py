@@ -5,7 +5,6 @@ from boundary import Boundary
 from particle import Particle
 from ray import Ray
 from PIL import Image
-import time
 
 drawline = pg.draw.line
 
@@ -37,14 +36,13 @@ def rayEditor(segment, num_rays, start, num_second):
         
 def main():
     ### CONFIG
-    #start_time = time.time()
     global pixels
     screen_w = 500
     screen_h = 500
     border_on = True
     num_walls = 3
     segment = 0
-    num_rays = 9
+    num_rays = 8
     rays2 = []
     white = (255,255,255)
     blue = (0, 0, 255)
@@ -67,7 +65,8 @@ def main():
         boundaries.append(Boundary(screen, (screen_w, screen_h), (0, screen_h)))
         boundaries.append(Boundary(screen, (0, screen_h), (0, 0)))
 
-     #BOUNDERIES
+    #BOUNDARIES
+        
     # BLOQUE 1
     boundaries.append(Boundary(screen, (20, 85), (50, 30)))
     boundaries.append(Boundary(screen, (50, 30), (100, 30)))
@@ -86,7 +85,8 @@ def main():
     boundaries.append(Boundary(screen, (320, 70), (270, 100)))
     boundaries.append(Boundary(screen, (410, 100), (390, 150)))
     boundaries.append(Boundary(screen, (410, 100), (340, 110)))
-    
+
+    # BLOQUE 3
     boundaries.append(Boundary(screen, (20, 400), (50,350)))
     boundaries.append(Boundary(screen, (20, 400), (60,370)))
     boundaries.append(Boundary(screen, (60, 370), (60,476)))
@@ -94,7 +94,8 @@ def main():
     boundaries.append(Boundary(screen, (300, 485), (150,450)))
     boundaries.append(Boundary(screen, (90, 300), (50,250)))
     boundaries.append(Boundary(screen, (150, 390), (150,450)))
-    
+
+    # BLOQUE 4
     boundaries.append(Boundary(screen, (495, 495), (400,495)))
     boundaries.append(Boundary(screen, (300, 400), (400,495)))
     boundaries.append(Boundary(screen, (495, 300), (480,400)))
@@ -136,7 +137,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
+                    
                 elif event.key == pygame.K_1:
                     pixels = []
                     screen.fill((0, 0, 0))
@@ -150,7 +151,7 @@ def main():
                             #PIX = PIX[0] => PIXEL, PIX[1] = COLOR
                             pos = pix[0]
                             color = pix[1]
-                            #print(pix)
+                            print(pix)
                             drawline(screen, color, pos, pos, 1)
 
                         drawline(screen, blue, (250, 250), (250, 0), 1)
@@ -158,7 +159,6 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_2:
                     pixels = []
@@ -180,7 +180,6 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
                     
                 elif event.key == pygame.K_3:
                     pixels = []
@@ -202,8 +201,7 @@ def main():
                         p.update(screen)
                         pg.display.update()
                         pg.time.wait(75)
-                    #print("--- %s seconds ---" % (time.time() - start_time))
-            
+
 def rayCaster(segment, num_rays, start, screen, boundaries, p, bounce):
     
     global pixels
@@ -293,9 +291,9 @@ def getPixels(rays, pixList,bounce):
 def getIntensidad(distance,bounce,flagSecondary = False):
 
     intensidad = (1-(distance/500))**2
-    #intensidad = max(0, min(intensidad, 255))
+    intensidad = max(0, min(intensidad, 255))
     intensidad =  (255 * intensidad)
-    #print(intensidad)
+    
     if intensidad > 255:
         intensidad = 255
         
@@ -303,16 +301,10 @@ def getIntensidad(distance,bounce,flagSecondary = False):
         color = (intensidad,intensidad,intensidad)
         return color
     #Calcula la intensidad de acuerdo al rebote
-    if bounce == 1:
-        intensidad = intensidad - ((intensidad * 0.25))
-    if bounce == 2:
-        intensidad = intensidad - ((intensidad * 0.25))
-    if bounce == 3:
-        intensidad = intensidad - ((intensidad * 0.25))
+    intensidad = intensidad - (intensidad * (bounce/100))
     #Cada vez que sea un rayo secundario disminuye su intensidad un 25%
     if flagSecondary:
         intensidad = intensidad - (intensidad * 0.25)
-        
     return (intensidad,intensidad,intensidad)
 
 #OBTENER PICS DE LOS SECUNDARIOS
